@@ -1,0 +1,3391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkSync Pro - Human Resource Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --border-radius: 12px;
+            --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: var(--background);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Authentication Pages */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 480px;
+            padding: 50px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .auth-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .auth-header p {
+            color: var(--gray);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .password-requirements {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-block {
+            width: 100%;
+            display: block;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-info {
+            background: var(--info);
+        }
+
+        .btn-light {
+            background: white;
+            color: var(--dark);
+            border: 2px solid var(--light-gray);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard */
+        .dashboard-header {
+            margin: 40px 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-header h1 {
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 2.2rem;
+        }
+
+        .dashboard-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-card h3 {
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        .dashboard-card p {
+            color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-content h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .stat-trend {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .trend-up {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .trend-down {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease;
+        }
+
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .table-header h2 {
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(90deg, var(--light), var(--light-gray));
+        }
+
+        th, td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            transition: var(--transition);
+        }
+
+        tbody tr:hover {
+            background: rgba(37, 99, 235, 0.02);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-width: 90px;
+            justify-content: center;
+        }
+
+        .status-badge i {
+            font-size: 0.8rem;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .status-approved {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status-present {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-absent {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status-halfday {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .status-leave {
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        /* Profile Page */
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .profile-sidebar {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 35px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-gray), white);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--primary);
+            overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-details {
+            flex: 2;
+            min-width: 350px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 35px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 18px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-label {
+            flex: 1;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .detail-value {
+            flex: 2;
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        /* Leave Application Form */
+        .form-row {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        textarea.form-control {
+            min-height: 140px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            color: var(--gray);
+            position: relative;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Announcement Card */
+        .announcement-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .announcement-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .announcement-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 25px;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .footer-section p {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-section a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 0;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .auth-card {
+                padding: 30px 25px;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .profile-container {
+                flex-direction: column;
+            }
+            
+            .about-container {
+                padding: 30px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .table-container {
+                padding: 20px 15px;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                padding: 12px 20px;
+            }
+            
+            .modal-content {
+                padding: 25px;
+                width: 95%;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-4 {
+            margin-top: 40px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 40px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .gap-3 {
+            gap: 12px;
+        }
+        
+        .w-full {
+            width: 100%;
+        }
+        
+        .text-sm {
+            font-size: 0.9rem;
+        }
+        
+        .text-lg {
+            font-size: 1.2rem;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .text-success {
+            color: var(--success);
+        }
+        
+        .text-danger {
+            color: var(--danger);
+        }
+        
+        .text-warning {
+            color: var(--warning);
+        }
+        
+        .bg-white {
+            background: white;
+        }
+        
+        .rounded-lg {
+            border-radius: var(--border-radius);
+        }
+        
+        .shadow {
+            box-shadow: var(--box-shadow);
+        }
+        
+        .p-4 {
+            padding: 24px;
+        }
+        
+        .p-6 {
+            padding: 36px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" onclick="goToDashboard()">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>WorkSync Pro</span>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <!-- Navigation links will be injected by JavaScript -->
+                </ul>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div>
+                        <span id="userName" class="font-bold">John Doe</span>
+                        <div class="text-sm text-gray" id="userRole">Employee</div>
+                    </div>
+                    <button class="btn btn-light" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="mainContent" class="container">
+        <!-- Content will be injected by JavaScript based on the route -->
+    </main>
+
+    <!-- Modal for Admin Actions -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Admin Action</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalContent">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>WorkSync Pro</h3>
+                    <p>Every workday, perfectly synchronized. Streamline your HR operations with our comprehensive management system.</p>
+                    <div class="mt-4">
+                        <p><i class="fas fa-envelope mr-2"></i> support@worksyncpro.com</p>
+                        <p><i class="fas fa-phone mr-2"></i> +91 1800-123-4567</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i> Bengaluru, Karnataka, India</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#about"><i class="fas fa-info-circle mr-2"></i> About Us</a>
+                    <a href="#dashboard"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a>
+                    <a href="#profile"><i class="fas fa-user mr-2"></i> Profile</a>
+                    <a href="#attendance"><i class="fas fa-calendar-check mr-2"></i> Attendance</a>
+                    <a href="#leave"><i class="fas fa-umbrella-beach mr-2"></i> Leave Management</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <a href="#"><i class="fas fa-file-alt mr-2"></i> Documentation</a>
+                    <a href="#"><i class="fas fa-question-circle mr-2"></i> Help Center</a>
+                    <a href="#"><i class="fas fa-bell mr-2"></i> Notifications</a>
+                    <a href="#"><i class="fas fa-chart-bar mr-2"></i> Reports</a>
+                    <a href="#"><i class="fas fa-cog mr-2"></i> Settings</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 WorkSync Pro HRMS. All rights reserved. | Empowering Indian Workforce</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Application State
+        const state = {
+            currentUser: {
+                id: 1,
+                name: "Arjun Sharma",
+                role: "admin", // "employee" or "admin"
+                email: "arjun.sharma@worksyncpro.com",
+                employeeId: "WSP-001",
+                department: "Engineering",
+                position: "Senior Software Engineer",
+                joinDate: "2021-06-15",
+                salary: 1850000,
+                contact: "+91 9876543210",
+                location: "Bengaluru, Karnataka",
+                profilePic: null,
+                performance: 92,
+                attendance: 96
+            },
+            currentPage: "login", // login, signup, dashboard, profile, attendance, leave, payroll, about
+            isAuthenticated: false,
+            navigationHistory: []
+        };
+
+        // Registered Employees with Login Credentials
+        const registeredEmployees = [
+            { 
+                id: 1, 
+                name: "Arjun Sharma", 
+                email: "arjun.sharma@worksyncpro.com", 
+                password: "Admin@123",
+                employeeId: "WSP-001",
+                department: "Engineering", 
+                position: "Senior Software Engineer", 
+                contact: "+91 9876543210", 
+                location: "Bengaluru", 
+                salary: 1850000, 
+                joinDate: "2021-06-15", 
+                status: "Active",
+                role: "admin",
+                performance: 92,
+                attendance: 96,
+                leavesRemaining: { paid: 12, sick: 8, casual: 10 }
+            },
+            { 
+                id: 2, 
+                name: "Priya Patel", 
+                email: "priya.patel@worksyncpro.com", 
+                password: "Priya@123",
+                employeeId: "WSP-002",
+                department: "Marketing", 
+                position: "Marketing Manager", 
+                contact: "+91 9876543211", 
+                location: "Mumbai", 
+                salary: 1450000, 
+                joinDate: "2020-11-22", 
+                status: "Active",
+                role: "employee",
+                performance: 88,
+                attendance: 94,
+                leavesRemaining: { paid: 10, sick: 6, casual: 8 }
+            },
+            { 
+                id: 3, 
+                name: "Rahul Verma", 
+                email: "rahul.verma@worksyncpro.com", 
+                password: "Rahul@123",
+                employeeId: "WSP-003",
+                department: "Sales", 
+                position: "Sales Director", 
+                contact: "+91 9876543212", 
+                location: "Delhi", 
+                salary: 1650000, 
+                joinDate: "2019-08-10", 
+                status: "Active",
+                role: "employee",
+                performance: 85,
+                attendance: 92,
+                leavesRemaining: { paid: 8, sick: 5, casual: 6 }
+            },
+            { 
+                id: 4, 
+                name: "Anjali Reddy", 
+                email: "anjali.reddy@worksyncpro.com", 
+                password: "Anjali@123",
+                employeeId: "WSP-004",
+                department: "HR", 
+                position: "HR Manager", 
+                contact: "+91 9876543213", 
+                location: "Hyderabad", 
+                salary: 1350000, 
+                joinDate: "2022-03-05", 
+                status: "Active",
+                role: "employee",
+                performance: 90,
+                attendance: 98,
+                leavesRemaining: { paid: 15, sick: 10, casual: 12 }
+            },
+            { 
+                id: 5, 
+                name: "Vikram Singh", 
+                email: "vikram.singh@worksyncpro.com", 
+                password: "Vikram@123",
+                employeeId: "WSP-005",
+                department: "Finance", 
+                position: "Finance Controller", 
+                contact: "+91 9876543214", 
+                location: "Chennai", 
+                salary: 1750000, 
+                joinDate: "2018-04-18", 
+                status: "Active",
+                role: "employee",
+                performance: 87,
+                attendance: 91,
+                leavesRemaining: { paid: 9, sick: 7, casual: 9 }
+            },
+            { 
+                id: 6, 
+                name: "Sneha Gupta", 
+                email: "sneha.gupta@worksyncpro.com", 
+                password: "Sneha@123",
+                employeeId: "WSP-006",
+                department: "Engineering", 
+                position: "Frontend Developer", 
+                contact: "+91 9876543215", 
+                location: "Pune", 
+                salary: 950000, 
+                joinDate: "2022-09-30", 
+                status: "Active",
+                role: "employee",
+                performance: 84,
+                attendance: 89,
+                leavesRemaining: { paid: 14, sick: 9, casual: 11 }
+            },
+            { 
+                id: 7, 
+                name: "Rajesh Kumar", 
+                email: "rajesh.kumar@worksyncpro.com", 
+                password: "Rajesh@123",
+                employeeId: "WSP-007",
+                department: "Operations", 
+                position: "Operations Manager", 
+                contact: "+91 9876543216", 
+                location: "Kolkata", 
+                salary: 1250000, 
+                joinDate: "2020-02-14", 
+                status: "Active",
+                role: "employee",
+                performance: 86,
+                attendance: 93,
+                leavesRemaining: { paid: 11, sick: 8, casual: 10 }
+            },
+            { 
+                id: 8, 
+                name: "Meera Nair", 
+                email: "meera.nair@worksyncpro.com", 
+                password: "Meera@123",
+                employeeId: "WSP-008",
+                department: "Quality Assurance", 
+                position: "QA Lead", 
+                contact: "+91 9876543217", 
+                location: "Bengaluru", 
+                salary: 1150000, 
+                joinDate: "2021-11-08", 
+                status: "Active",
+                role: "employee",
+                performance: 89,
+                attendance: 95,
+                leavesRemaining: { paid: 13, sick: 8, casual: 10 }
+            }
+        ];
+
+        // Leave Requests Data
+        const sampleLeaveRequests = [
+            { id: 1, employeeId: 1, employee: "Arjun Sharma", type: "Sick Leave", startDate: "2023-10-27", endDate: "2023-10-27", days: 1, status: "approved", remarks: "Not feeling well", appliedDate: "2023-10-26" },
+            { id: 2, employeeId: 2, employee: "Priya Patel", type: "Paid Leave", startDate: "2023-11-05", endDate: "2023-11-10", days: 5, status: "pending", remarks: "Family vacation", appliedDate: "2023-10-25" },
+            { id: 3, employeeId: 3, employee: "Rahul Verma", type: "Unpaid Leave", startDate: "2023-11-15", endDate: "2023-11-16", days: 2, status: "rejected", remarks: "Personal work", appliedDate: "2023-10-24" },
+            { id: 4, employeeId: 4, employee: "Anjali Reddy", type: "Maternity Leave", startDate: "2023-12-01", endDate: "2024-03-01", days: 90, status: "approved", remarks: "Maternity leave as per policy", appliedDate: "2023-10-20" },
+            { id: 5, employeeId: 5, employee: "Vikram Singh", type: "Paid Leave", startDate: "2023-11-20", endDate: "2023-11-25", days: 5, status: "pending", remarks: "Attend wedding", appliedDate: "2023-10-27" },
+            { id: 6, employeeId: 6, employee: "Sneha Gupta", type: "Casual Leave", startDate: "2023-11-08", endDate: "2023-11-08", days: 1, status: "pending", remarks: "Personal work", appliedDate: "2023-10-28" }
+        ];
+
+        // Attendance Data
+        const sampleAttendance = [
+            { date: "2023-10-23", day: "Monday", checkIn: "09:05", checkOut: "17:30", status: "present", employeeId: 1 },
+            { date: "2023-10-24", day: "Tuesday", checkIn: "08:55", checkOut: "17:45", status: "present", employeeId: 1 },
+            { date: "2023-10-25", day: "Wednesday", checkIn: "09:15", checkOut: "17:20", status: "present", employeeId: 1 },
+            { date: "2023-10-26", day: "Thursday", checkIn: "09:00", checkOut: "13:00", status: "half-day", employeeId: 1 },
+            { date: "2023-10-27", day: "Friday", checkIn: "-", checkOut: "-", status: "leave", employeeId: 1 }
+        ];
+
+        // Admin Announcements
+        const adminAnnouncements = [
+            { id: 1, title: "Annual Performance Review", message: "Annual performance reviews will be conducted next month. Please prepare your self-assessments.", date: "2023-10-25", priority: "high" },
+            { id: 2, title: "Team Building Event", message: "Team building event scheduled for November 15th at Resort Paradise.", date: "2023-10-20", priority: "medium" },
+            { id: 3, title: "New HR Policies", message: "New HR policies have been updated. Please review them in the documents section.", date: "2023-10-18", priority: "low" }
+        ];
+
+        // Page Templates
+        const pages = {
+            // Login Page with Employee List
+            login: `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Sign In to WorkSync Pro</h2>
+                            <p>Enter your credentials to access your account</p>
+                        </div>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="loginEmail">Email Address</label>
+                                <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email" required>
+                                <div class="error-message text-danger text-sm mt-1" id="loginEmailError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
+                                <div class="error-message text-danger text-sm mt-1" id="loginPasswordError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginRole">Login As</label>
+                                <select class="form-control" id="loginRole" required>
+                                    <option value="">Select Role</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="admin">Admin/HR Officer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-block mt-4">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </button>
+                        </form>
+                        <p class="text-center mt-4">Don't have an account? <a href="#" id="goToSignup" class="text-primary">Sign Up</a></p>
+                        
+                        <div class="mt-6">
+                            <h3 class="text-center mb-4">Demo Credentials</h3>
+                            <div style="font-size: 0.9rem; color: var(--gray);">
+                                <p><strong>Admin:</strong> arjun.sharma@worksyncpro.com / Admin@123</p>
+                                <p><strong>Employees:</strong></p>
+                                <div style="max-height: 200px; overflow-y: auto; padding: 10px; background: var(--light-gray); border-radius: 8px;">
+                                    ${registeredEmployees.filter(e => e.role === 'employee').map(emp => `
+                                        <div style="padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                                            <strong>${emp.name}</strong> - ${emp.email} / ${emp.password}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            // Signup Page
+            signup: `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Create an Account</h2>
+                            <p>Register to access the WorkSync Pro HRMS</p>
+                        </div>
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label for="signupEmployeeId">Employee ID *</label>
+                                <input type="text" class="form-control" id="signupEmployeeId" placeholder="Enter your employee ID" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupFullName">Full Name *</label>
+                                <input type="text" class="form-control" id="signupFullName" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupEmail">Email Address *</label>
+                                <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email" required>
+                                <small class="text-gray">Email verification will be required</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupPassword">Password *</label>
+                                <input type="password" class="form-control" id="signupPassword" placeholder="Create a secure password" required>
+                                <div class="password-requirements">
+                                    <div>Password must contain:</div>
+                                    <div>• At least 8 characters</div>
+                                    <div>• One uppercase letter</div>
+                                    <div>• One lowercase letter</div>
+                                    <div>• One number</div>
+                                    <div>• One special character</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupConfirmPassword">Confirm Password *</label>
+                                <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupRole">Register As *</label>
+                                <select class="form-control" id="signupRole" required>
+                                    <option value="">Select your role</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="admin">Admin/HR Officer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-block mt-4">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </button>
+                        </form>
+                        <p class="text-center mt-4">Already have an account? <a href="#" id="goToLogin" class="text-primary">Sign In</a></p>
+                    </div>
+                </div>
+            `,
+            
+            // Employee Dashboard
+            employeeDashboard: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>Employee Dashboard</h1>
+                        <p>Welcome back, ${state.currentUser.name}! Here's your overview.</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToAbout()">
+                            <i class="fas fa-info-circle"></i> About
+                        </button>
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+                
+                ${adminAnnouncements.length > 0 ? `
+                    <div class="table-container mb-6">
+                        <h2>Company Announcements</h2>
+                        ${adminAnnouncements.map(ann => `
+                            <div class="announcement-card">
+                                <h3><i class="fas fa-bullhorn mr-2"></i>${ann.title}</h3>
+                                <p>${ann.message}</p>
+                                <div class="text-sm text-gray">Posted on: ${ann.date}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>${state.currentUser.attendance || 0}%</h3>
+                                <p>Attendance Rate</p>
+                                <span class="stat-trend trend-up">+2% this month</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Attendance Progress</span>
+                                <span>${state.currentUser.attendance || 0}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${state.currentUser.attendance || 0}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>${state.currentUser.performance || 0}%</h3>
+                                <p>Performance Score</p>
+                                <span class="stat-trend trend-up">Excellent</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Performance</span>
+                                <span>${state.currentUser.performance || 0}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${state.currentUser.performance || 0}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-umbrella-beach"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>${state.currentUser.leavesRemaining ? Object.values(state.currentUser.leavesRemaining).reduce((a,b) => a+b, 0) : 0}</h3>
+                                <p>Leave Balance</p>
+                                <span class="stat-trend trend-down">-2 this year</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Leave Usage</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>₹${(state.currentUser.salary/12).toLocaleString('en-IN')}</h3>
+                                <p>Monthly Salary</p>
+                                <span class="stat-trend trend-up">+12% YoY</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Salary Growth</span>
+                                <span>+12%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" id="profileCard">
+                        <div class="card-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>My Profile</h3>
+                        <p>View and update your personal and professional information.</p>
+                    </div>
+                    
+                    <div class="dashboard-card" id="attendanceCard">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Attendance</h3>
+                        <p>Check your daily attendance records and status.</p>
+                    </div>
+                    
+                    <div class="dashboard-card" id="leaveCard">
+                        <div class="card-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <h3>Leave Management</h3>
+                        <p>Apply for leave and track your leave requests.</p>
+                    </div>
+                    
+                    <div class="dashboard-card" id="payrollCard">
+                        <div class="card-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h3>Payroll</h3>
+                        <p>View your salary details and payment history.</p>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>Recent Activity</h2>
+                        <button class="btn btn-light">
+                            <i class="fas fa-history"></i> View All
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2023-10-27</td>
+                                <td>Sick Leave Application</td>
+                                <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Approved</span></td>
+                                <td>1 day approved</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-26</td>
+                                <td>Half-day attendance marked</td>
+                                <td><span class="status-badge status-halfday"><i class="fas fa-clock"></i> Half-day</span></td>
+                                <td>Checked out at 13:00</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-25</td>
+                                <td>Salary credited</td>
+                                <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Completed</span></td>
+                                <td>₹${(state.currentUser.salary/12).toLocaleString('en-IN')} credited</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-24</td>
+                                <td>Profile updated</td>
+                                <td><span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Updated</span></td>
+                                <td>Contact information updated</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            
+            // Admin Dashboard
+            adminDashboard: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>Admin Dashboard</h1>
+                        <p>Welcome back, ${state.currentUser.name}! Manage your HR operations.</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToAbout()">
+                            <i class="fas fa-info-circle"></i> About
+                        </button>
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                        <button class="btn btn-info" onclick="createAnnouncement()">
+                            <i class="fas fa-bullhorn"></i> Announce
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>${registeredEmployees.length}</h3>
+                                <p>Total Employees</p>
+                                <span class="stat-trend trend-up">+3 this quarter</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>96%</h3>
+                                <p>Attendance Rate</p>
+                                <span class="stat-trend trend-up">+2% this month</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-umbrella-beach"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>${sampleLeaveRequests.filter(l => l.status === 'pending').length}</h3>
+                                <p>Pending Leaves</p>
+                                <span class="stat-trend trend-down">Requires attention</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>₹${(registeredEmployees.reduce((sum, emp) => sum + emp.salary, 0)/12).toLocaleString('en-IN')}</h3>
+                                <p>Monthly Payroll</p>
+                                <span class="stat-trend trend-up">On track</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" id="employeesCard">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Employee Management</h3>
+                        <p>View and manage all employee records and profiles.</p>
+                    </div>
+                    
+                    <div class="dashboard-card" id="adminAttendanceCard">
+                        <div class="card-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3>Attendance Records</h3>
+                        <p>Monitor attendance for all employees in the organization.</p>
+                    </div>
+                    
+                    <div class="dashboard-card" id="leaveApprovalCard">
+                        <div class="card-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Leave Approvals</h3>
+                        <p>Review and approve/reject employee leave requests.</p>
+                    </div>
+                    
+                    <div class="dashboard-card" id="adminPayrollCard">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Payroll Control</h3>
+                        <p>Manage and update payroll for all employees.</p>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>Recent Leave Requests</h2>
+                        <button class="btn btn-light" onclick="goToPage('leave')">
+                            <i class="fas fa-external-link-alt"></i> View All
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>Date Range</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sampleLeaveRequests.slice(0, 4).map(request => `
+                                <tr>
+                                    <td><strong>${request.employee}</strong></td>
+                                    <td>${request.type}</td>
+                                    <td>${request.startDate} to ${request.endDate}</td>
+                                    <td><span class="status-badge status-${request.status}">
+                                        <i class="fas fa-${request.status === 'approved' ? 'check-circle' : request.status === 'rejected' ? 'times-circle' : 'clock'}"></i>
+                                        ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                                    </span></td>
+                                    <td>
+                                        ${request.status === 'pending' ? 
+                                            `<div class="flex gap-3">
+                                                <button class="btn btn-success btn-sm" onclick="approveLeave(${request.id})">
+                                                    <i class="fas fa-check"></i> Approve
+                                                </button>
+                                                <button class="btn btn-danger btn-sm" onclick="rejectLeave(${request.id})">
+                                                    <i class="fas fa-times"></i> Reject
+                                                </button>
+                                                <button class="btn btn-info btn-sm" onclick="callForMeeting(${request.employeeId}, '${request.employee}')">
+                                                    <i class="fas fa-comments"></i> Meeting
+                                                </button>
+                                             </div>` : 
+                                            `<div class="flex gap-2">
+                                                <span class="status-badge status-${request.status}" style="cursor: default;">
+                                                    <i class="fas fa-${request.status === 'approved' ? 'check' : 'times'}"></i>
+                                                    ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                                                </span>
+                                                <button class="btn btn-info btn-sm" onclick="callForMeeting(${request.employeeId}, '${request.employee}')">
+                                                    <i class="fas fa-comments"></i> Meeting
+                                                </button>
+                                             </div>`
+                                        }
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>Salary Status - Current Month</h2>
+                        <button class="btn btn-light" onclick="goToPage('payroll')">
+                            <i class="fas fa-external-link-alt"></i> Full Details
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Department</th>
+                                <th>Monthly Salary</th>
+                                <th>Status</th>
+                                <th>Payment Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${registeredEmployees.slice(0, 5).map(emp => `
+                                <tr>
+                                    <td><strong>${emp.name}</strong></td>
+                                    <td>${emp.department}</td>
+                                    <td>₹${(emp.salary/12).toLocaleString('en-IN')}</td>
+                                    <td><span class="status-badge status-approved">
+                                        <i class="fas fa-check-circle"></i> Processed
+                                    </span></td>
+                                    <td>25 Oct 2023</td>
+                                    <td>
+                                        <div class="flex gap-2">
+                                            <button class="btn btn-light btn-sm" onclick="editEmployee(${emp.id})">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button class="btn btn-info btn-sm" onclick="callForMeeting(${emp.id}, '${emp.name}')">
+                                                <i class="fas fa-comments"></i> Meeting
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            
+            // Profile Page
+            profile: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>${state.currentUser.role === 'admin' ? 'Employee Management' : 'Employee Profile'}</h1>
+                        <p>${state.currentUser.role === 'admin' ? 'Manage employee records and profiles' : 'Manage your personal and professional information'}</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn" onclick="goToPage('dashboard')">
+                            <i class="fas fa-home"></i> Dashboard
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+                
+                ${state.currentUser.role === 'admin' ? `
+                    <div class="table-container mb-6">
+                        <div class="table-header">
+                            <h2>All Employees</h2>
+                            <button class="btn" onclick="addNewEmployee()">
+                                <i class="fas fa-user-plus"></i> Add Employee
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
+                                    <th>Contact</th>
+                                    <th>Join Date</th>
+                                    <th>Salary</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${registeredEmployees.map(emp => `
+                                    <tr>
+                                        <td><strong>${emp.employeeId}</strong></td>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="user-avatar" style="width: 35px; height: 35px; font-size: 0.9rem;">
+                                                    ${emp.name.split(' ').map(n => n[0]).join('')}
+                                                </div>
+                                                <div>
+                                                    <div>${emp.name}</div>
+                                                    <div class="text-sm text-gray">${emp.email}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>${emp.department}</td>
+                                        <td>${emp.position}</td>
+                                        <td>${emp.contact}</td>
+                                        <td>${emp.joinDate}</td>
+                                        <td>₹${emp.salary.toLocaleString('en-IN')}/yr</td>
+                                        <td>
+                                            <div class="flex gap-2">
+                                                <button class="btn btn-light btn-sm" onclick="viewEmployee(${emp.id})">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-light btn-sm" onclick="editEmployee(${emp.id})">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-info btn-sm" onclick="callForMeeting(${emp.id}, '${emp.name}')">
+                                                    <i class="fas fa-comments"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : `
+                    <div class="profile-container">
+                        <div class="profile-sidebar">
+                            <div class="profile-pic">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3>${state.currentUser.name}</h3>
+                            <p>${state.currentUser.position}</p>
+                            <p>${state.currentUser.department} Department</p>
+                            <p class="mt-4"><i class="fas fa-id-badge mr-2"></i> Employee ID: ${state.currentUser.employeeId}</p>
+                            <p><i class="fas fa-phone mr-2"></i> ${state.currentUser.contact}</p>
+                            <p><i class="fas fa-map-marker-alt mr-2"></i> ${state.currentUser.location}</p>
+                            <button class="btn mt-6" id="editProfileBtn">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                        </div>
+                        
+                        <div class="profile-details">
+                            <div class="tabs">
+                                <div class="tab active" data-tab="personal">Personal Details</div>
+                                <div class="tab" data-tab="job">Job Details</div>
+                                <div class="tab" data-tab="salary">Salary Structure</div>
+                                <div class="tab" data-tab="documents">Documents</div>
+                                <div class="tab" data-tab="progress">Progress</div>
+                            </div>
+                            
+                            <div id="personalTab" class="tab-content active">
+                                <h3 class="section-title">Personal Information</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Full Name</div>
+                                    <div class="detail-value">${state.currentUser.name}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Email</div>
+                                    <div class="detail-value">${state.currentUser.email}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Phone</div>
+                                    <div class="detail-value">${state.currentUser.contact}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Address</div>
+                                    <div class="detail-value">123 MG Road, Bengaluru, Karnataka 560001</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Date of Birth</div>
+                                    <div class="detail-value">15 June 1992</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Emergency Contact</div>
+                                    <div class="detail-value">+91 9876543219 (Rohan Sharma)</div>
+                                </div>
+                            </div>
+                            
+                            <div id="jobTab" class="tab-content">
+                                <h3 class="section-title">Job Information</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Employee ID</div>
+                                    <div class="detail-value">${state.currentUser.employeeId}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Department</div>
+                                    <div class="detail-value">${state.currentUser.department}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Position</div>
+                                    <div class="detail-value">${state.currentUser.position}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Joining Date</div>
+                                    <div class="detail-value">${state.currentUser.joinDate}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Employment Type</div>
+                                    <div class="detail-value">Full-time</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Reporting Manager</div>
+                                    <div class="detail-value">Sanjay Mehta (CTO)</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Work Location</div>
+                                    <div class="detail-value">${state.currentUser.location}</div>
+                                </div>
+                            </div>
+                            
+                            <div id="salaryTab" class="tab-content">
+                                <h3 class="section-title">Salary Structure</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Base Salary</div>
+                                    <div class="detail-value">₹${state.currentUser.salary.toLocaleString('en-IN')} per year</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Monthly Salary</div>
+                                    <div class="detail-value">₹${(state.currentUser.salary/12).toLocaleString('en-IN')}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Pay Frequency</div>
+                                    <div class="detail-value">Monthly (25th of each month)</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Bank Account</div>
+                                    <div class="detail-value">HDFC Bank **** **** 4321</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">PF Account Number</div>
+                                    <div class="detail-value">MH/BAN/123456/789</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Tax Information</div>
+                                    <div class="detail-value">PAN: ABCPS1234D | Tax Slab: 30%</div>
+                                </div>
+                            </div>
+                            
+                            <div id="documentsTab" class="tab-content">
+                                <h3 class="section-title">Documents</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Employment Contract</div>
+                                    <div class="detail-value">
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-download"></i> Download</button>
+                                    </div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Aadhar Card</div>
+                                    <div class="detail-value">
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-download"></i> Download</button>
+                                    </div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">PAN Card</div>
+                                    <div class="detail-value">
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-download"></i> Download</button>
+                                    </div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Resume</div>
+                                    <div class="detail-value">
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-download"></i> Download</button>
+                                    </div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Educational Certificates</div>
+                                    <div class="detail-value">
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn btn-light btn-sm"><i class="fas fa-download"></i> Download</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="progressTab" class="tab-content">
+                                <h3 class="section-title">Performance & Progress</h3>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Overall Performance</span>
+                                        <span>${state.currentUser.performance || 0}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${state.currentUser.performance || 0}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Attendance Rate</span>
+                                        <span>${state.currentUser.attendance || 0}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${state.currentUser.attendance || 0}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Task Completion</span>
+                                        <span>88%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Skill Development</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6">
+                                    <h4 class="section-title">Leave Balance</h4>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Paid Leaves</div>
+                                        <div class="detail-value">${state.currentUser.leavesRemaining?.paid || 0} days remaining</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Sick Leaves</div>
+                                        <div class="detail-value">${state.currentUser.leavesRemaining?.sick || 0} days remaining</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Casual Leaves</div>
+                                        <div class="detail-value">${state.currentUser.leavesRemaining?.casual || 0} days remaining</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `}
+            `,
+            
+            // Attendance Page
+            attendance: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>Attendance Management</h1>
+                        <p>${state.currentUser.role === 'admin' ? 'View and manage employee attendance' : 'Track your daily attendance and check-in/out'}</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn" onclick="goToPage('dashboard')">
+                            <i class="fas fa-home"></i> Dashboard
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+                
+                ${state.currentUser.role === 'employee' ? `
+                    <div class="table-container mb-6">
+                        <h2>Today's Status</h2>
+                        <div style="display: flex; gap: 30px; align-items: center; padding: 30px 0; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 300px;">
+                                <h3 style="color: var(--primary); margin-bottom: 15px;">
+                                    <i class="fas fa-calendar-day mr-2"></i>
+                                    Current Date: <span id="currentDate">${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                </h3>
+                                <div style="background: var(--light); padding: 20px; border-radius: 8px;">
+                                    <div style="margin-bottom: 15px;">
+                                        <div style="font-size: 0.9rem; color: var(--gray);">Check-in time</div>
+                                        <div style="font-size: 1.5rem; font-weight: 600; color: var(--success);" id="checkinTime">09:05 AM</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.9rem; color: var(--gray);">Check-out time</div>
+                                        <div style="font-size: 1.5rem; font-weight: 600; color: var(--warning);" id="checkoutTime">--:--</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-left: auto; display: flex; flex-direction: column; gap: 15px;">
+                                <button class="btn btn-success" id="checkinBtn" style="padding: 15px 30px; font-size: 1.1rem;">
+                                    <i class="fas fa-sign-in-alt"></i> Check In
+                                </button>
+                                <button class="btn btn-warning" id="checkoutBtn" disabled style="padding: 15px 30px; font-size: 1.1rem;">
+                                    <i class="fas fa-sign-out-alt"></i> Check Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>${state.currentUser.role === 'admin' ? 'Employee Attendance Records' : 'My Attendance Records'}</h2>
+                        <div class="flex gap-3">
+                            <select class="form-control" style="width: auto;">
+                                <option>This Week</option>
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                                <option>Custom Range</option>
+                            </select>
+                            <button class="btn btn-light">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                ${state.currentUser.role === 'admin' ? '<th>Employee</th>' : ''}
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Working Hours</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${(state.currentUser.role === 'admin' ? sampleAttendance : sampleAttendance.filter(a => a.employeeId === state.currentUser.id))
+                                .map(record => `
+                                <tr>
+                                    <td><strong>${record.date}</strong></td>
+                                    <td>${record.day}</td>
+                                    ${state.currentUser.role === 'admin' ? 
+                                        `<td><strong>${registeredEmployees.find(e => e.id === record.employeeId)?.name || 'Unknown'}</strong></td>` : 
+                                        ''}
+                                    <td>${record.checkIn}</td>
+                                    <td>${record.checkOut}</td>
+                                    <td>${record.checkIn !== '-' ? '8h 25m' : '--'}</td>
+                                    <td><span class="status-badge status-${record.status}">
+                                        <i class="fas fa-${record.status === 'present' ? 'check-circle' : record.status === 'absent' ? 'times-circle' : record.status === 'half-day' ? 'clock' : 'umbrella-beach'}"></i>
+                                        ${record.status.charAt(0).toUpperCase() + record.status.replace('-', ' ').slice(1)}
+                                    </span></td>
+                                    <td>${record.status === 'leave' ? 'Sick Leave' : record.status === 'half-day' ? 'Doctor Appointment' : 'Regular'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            
+            // Leave Management Page
+            leave: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>Leave Management</h1>
+                        <p>${state.currentUser.role === 'admin' ? 'Approve or reject employee leave requests' : 'Apply for leave and track your requests'}</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn" onclick="goToPage('dashboard')">
+                            <i class="fas fa-home"></i> Dashboard
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+                
+                ${state.currentUser.role === 'employee' ? `
+                    <div class="table-container mb-6">
+                        <h2>Apply for Leave</h2>
+                        <form id="leaveForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leaveType">Leave Type *</label>
+                                    <select class="form-control" id="leaveType" required>
+                                        <option value="">Select leave type</option>
+                                        <option value="paid">Paid Leave</option>
+                                        <option value="sick">Sick Leave</option>
+                                        <option value="casual">Casual Leave</option>
+                                        <option value="unpaid">Unpaid Leave</option>
+                                        <option value="maternity">Maternity Leave</option>
+                                        <option value="paternity">Paternity Leave</option>
+                                        <option value="bereavement">Bereavement Leave</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leaveDays">Number of Days *</label>
+                                    <input type="number" class="form-control" id="leaveDays" min="0.5" max="30" step="0.5" placeholder="Enter number of days" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="startDate">Start Date *</label>
+                                    <input type="date" class="form-control" id="startDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="endDate">End Date *</label>
+                                    <input type="date" class="form-control" id="endDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="leaveRemarks">Remarks *</label>
+                                <textarea class="form-control" id="leaveRemarks" placeholder="Provide a reason for your leave application" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">
+                                <i class="fas fa-paper-plane"></i> Submit Leave Request
+                            </button>
+                        </form>
+                    </div>
+                ` : ''}
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>${state.currentUser.role === 'admin' ? 'All Leave Requests' : 'My Leave Requests'}</h2>
+                        <div class="flex gap-3">
+                            <select class="form-control" style="width: auto;" onchange="filterLeaveRequests(this.value)">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            ${state.currentUser.role === 'admin' ? 
+                                '<button class="btn btn-light"><i class="fas fa-download"></i> Export Report</button>' : 
+                                '<button class="btn btn-light" onclick="showLeaveBalance()"><i class="fas fa-chart-pie"></i> Leave Balance</button>'
+                            }
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                ${state.currentUser.role === 'admin' ? '<th>Employee</th>' : ''}
+                                <th>Leave Type</th>
+                                <th>Date Range</th>
+                                <th>Days</th>
+                                ${state.currentUser.role === 'admin' ? '<th>Applied On</th>' : ''}
+                                <th>Remarks</th>
+                                <th>Status</th>
+                                ${state.currentUser.role === 'admin' ? '<th>Actions</th>' : ''}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sampleLeaveRequests
+                                .filter(request => state.currentUser.role === 'admin' || request.employeeId === state.currentUser.id)
+                                .map(request => `
+                                <tr>
+                                    ${state.currentUser.role === 'admin' ? `<td><strong>${request.employee}</strong></td>` : ''}
+                                    <td>${request.type}</td>
+                                    <td>${request.startDate} to ${request.endDate}</td>
+                                    <td><strong>${request.days}</strong> day${request.days > 1 ? 's' : ''}</td>
+                                    ${state.currentUser.role === 'admin' ? `<td>${request.appliedDate}</td>` : ''}
+                                    <td>${request.remarks}</td>
+                                    <td><span class="status-badge status-${request.status}">
+                                        <i class="fas fa-${request.status === 'approved' ? 'check-circle' : request.status === 'rejected' ? 'times-circle' : 'clock'}"></i>
+                                        ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                                    </span></td>
+                                    ${state.currentUser.role === 'admin' ? 
+                                        `<td>
+                                            ${request.status === 'pending' ? 
+                                                `<div class="flex gap-2">
+                                                    <button class="btn btn-success btn-sm" onclick="approveLeave(${request.id})">
+                                                        <i class="fas fa-check"></i> Approve
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm" onclick="rejectLeave(${request.id})">
+                                                        <i class="fas fa-times"></i> Reject
+                                                    </button>
+                                                    <button class="btn btn-info btn-sm" onclick="callForMeeting(${request.employeeId}, '${request.employee}')">
+                                                        <i class="fas fa-comments"></i> Meeting
+                                                    </button>
+                                                 </div>` : 
+                                                `<div class="flex gap-2">
+                                                    <span class="status-badge status-${request.status}" style="cursor: default;">
+                                                        <i class="fas fa-${request.status === 'approved' ? 'check' : 'times'}"></i>
+                                                        ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                                                    </span>
+                                                    <button class="btn btn-info btn-sm" onclick="callForMeeting(${request.employeeId}, '${request.employee}')">
+                                                        <i class="fas fa-comments"></i> Meeting
+                                                    </button>
+                                                 </div>`
+                                            }
+                                        </td>` : ''
+                                    }
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            
+            // Payroll Page
+            payroll: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>${state.currentUser.role === 'admin' ? 'Payroll Management' : 'My Payroll'}</h1>
+                        <p>${state.currentUser.role === 'admin' ? 'Manage and update employee payroll' : 'View your salary details and history'}</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn" onclick="goToPage('dashboard')">
+                            <i class="fas fa-home"></i> Dashboard
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+                
+                ${state.currentUser.role === 'employee' ? `
+                    <div class="profile-container mb-6">
+                        <div class="profile-sidebar">
+                            <h3>Salary Summary</h3>
+                            <div style="font-size: 2.8rem; font-weight: 700; color: var(--primary); margin: 20px 0; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                ₹${(state.currentUser.salary / 12).toLocaleString('en-IN')}
+                            </div>
+                            <p>Monthly Salary (Net)</p>
+                            <div class="detail-row">
+                                <div class="detail-label">Annual Salary</div>
+                                <div class="detail-value">₹${state.currentUser.salary.toLocaleString('en-IN')}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Pay Frequency</div>
+                                <div class="detail-value">Monthly (25th)</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Next Pay Date</div>
+                                <div class="detail-value">25 November 2023</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Bank Account</div>
+                                <div class="detail-value">HDFC ****4321</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-details">
+                            <h3 class="section-title">Salary Breakdown - October 2023</h3>
+                            <div class="detail-row">
+                                <div class="detail-label">Basic Salary</div>
+                                <div class="detail-value">₹110,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">House Rent Allowance</div>
+                                <div class="detail-value">₹44,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Travel Allowance</div>
+                                <div class="detail-value">₹19,200</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Medical Allowance</div>
+                                <div class="detail-value">₹15,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Special Allowance</div>
+                                <div class="detail-value">₹35,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Performance Bonus</div>
+                                <div class="detail-value">₹25,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" style="color: var(--danger);">Tax Deduction</div>
+                                <div class="detail-value" style="color: var(--danger);">-₹45,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" style="color: var(--danger);">Provident Fund</div>
+                                <div class="detail-value" style="color: var(--danger);">-₹12,000</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" style="color: var(--danger);">Professional Tax</div>
+                                <div class="detail-value" style="color: var(--danger);">-₹2,500</div>
+                            </div>
+                            <hr style="margin: 25px 0; border: none; border-top: 2px solid var(--light-gray);">
+                            <div class="detail-row">
+                                <div class="detail-label"><strong style="font-size: 1.2rem;">Net Salary</strong></div>
+                                <div class="detail-value"><strong style="font-size: 1.2rem; color: var(--success);">₹${(state.currentUser.salary / 12).toLocaleString('en-IN')}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>${state.currentUser.role === 'admin' ? 'Employee Payroll Data' : 'Payment History'}</h2>
+                        <div class="flex gap-3">
+                            <select class="form-control" style="width: auto;">
+                                <option>Last 6 Months</option>
+                                <option>This Year</option>
+                                <option>Last Year</option>
+                                <option>All Time</option>
+                            </select>
+                            <button class="btn btn-light">
+                                <i class="fas fa-download"></i> Download Slips
+                            </button>
+                            ${state.currentUser.role === 'admin' ? 
+                                '<button class="btn" onclick="processPayroll()"><i class="fas fa-calculator"></i> Process Payroll</button>' : 
+                                ''
+                            }
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                ${state.currentUser.role === 'admin' ? '<th>Employee</th>' : '<th>Month</th>'}
+                                <th>Basic Salary</th>
+                                <th>Allowances</th>
+                                <th>Deductions</th>
+                                <th>Net Salary</th>
+                                <th>Payment Date</th>
+                                <th>Status</th>
+                                ${state.currentUser.role === 'admin' ? '<th>Actions</th>' : '<th>Payslip</th>'}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Array.from({length: 6}, (_, i) => {
+                                const month = new Date(2023, 9 - i, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                                const employee = registeredEmployees[i % registeredEmployees.length];
+                                const netSalary = state.currentUser.role === 'admin' ? 
+                                    employee.salary / 12 : 
+                                    state.currentUser.salary / 12;
+                                const allowances = netSalary * 0.4;
+                                const deductions = netSalary * 0.25;
+                                const basicSalary = netSalary - allowances + deductions;
+                                
+                                return `
+                                    <tr>
+                                        ${state.currentUser.role === 'admin' ? 
+                                            `<td>
+                                                <div class="flex items-center gap-3">
+                                                    <div class="user-avatar" style="width: 35px; height: 35px; font-size: 0.9rem;">
+                                                        ${employee.name.split(' ').map(n => n[0]).join('')}
+                                                    </div>
+                                                    <div>
+                                                        <div>${employee.name}</div>
+                                                        <div class="text-sm text-gray">${employee.department}</div>
+                                                    </div>
+                                                </div>
+                                            </td>` : 
+                                            `<td><strong>${month}</strong></td>`
+                                        }
+                                        <td>₹${basicSalary.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                        <td>₹${allowances.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                        <td>₹${deductions.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                        <td><strong>₹${netSalary.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong></td>
+                                        <td>${25 + i % 5} ${month.split(' ')[0]} 2023</td>
+                                        <td><span class="status-badge status-approved">
+                                            <i class="fas fa-check-circle"></i> Paid
+                                        </span></td>
+                                        ${state.currentUser.role === 'admin' ? 
+                                            `<td>
+                                                <div class="flex gap-2">
+                                                    <button class="btn btn-light btn-sm" onclick="editSalary(${employee.id})">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-info btn-sm" onclick="callForMeeting(${employee.id}, '${employee.name}')">
+                                                        <i class="fas fa-comments"></i>
+                                                    </button>
+                                                </div>
+                                            </td>` : 
+                                            `<td>
+                                                <button class="btn btn-light btn-sm">
+                                                    <i class="fas fa-download"></i> Download
+                                                </button>
+                                            </td>`
+                                        }
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            
+            // About Page
+            about: `
+                <div class="dashboard-header">
+                    <div>
+                        <h1>About WorkSync Pro</h1>
+                        <p>Learn more about our HR Management System</p>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="btn btn-light" onclick="goToPrevious()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn" onclick="goToPage('dashboard')">
+                            <i class="fas fa-home"></i> Dashboard
+                        </button>
+                        <button class="btn btn-light" onclick="goToNext()">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="about-container">
+                    <div class="about-header">
+                        <h1>WorkSync Pro HRMS</h1>
+                        <p style="font-size: 1.2rem; color: var(--primary);">Every workday, perfectly synchronized</p>
+                    </div>
+                    
+                    <div class="about-content">
+                        <div class="about-section">
+                            <h2><i class="fas fa-rocket" style="color: var(--primary);"></i> Our Mission</h2>
+                            <p>To revolutionize HR operations by providing a comprehensive, intuitive, and efficient Human Resource Management System that empowers organizations to manage their workforce effectively while enhancing employee experience.</p>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h2><i class="fas fa-eye" style="color: var(--primary);"></i> Our Vision</h2>
+                            <p>To become the leading HRMS solution provider in India, recognized for innovation, reliability, and exceptional service in streamlining HR processes for businesses of all sizes.</p>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h2><i class="fas fa-bullseye" style="color: var(--primary);"></i> Core Features</h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px;">
+                                <div style="background: var(--light); padding: 20px; border-radius: 8px;">
+                                    <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-user-check mr-2"></i>Employee Management</h3>
+                                    <p>Comprehensive employee profiles, document management, and role-based access control.</p>
+                                </div>
+                                <div style="background: var(--light); padding: 20px; border-radius: 8px;">
+                                    <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-calendar-alt mr-2"></i>Attendance Tracking</h3>
+                                    <p>Real-time check-in/check-out, daily/weekly views, and automated attendance reports.</p>
+                                </div>
+                                <div style="background: var(--light); padding: 20px; border-radius: 8px;">
+                                    <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-umbrella-beach mr-2"></i>Leave Management</h3>
+                                    <p>Streamlined leave applications, approval workflows, and leave balance tracking.</p>
+                                </div>
+                                <div style="background: var(--light); padding: 20px; border-radius: 8px;">
+                                    <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-file-invoice-dollar mr-2"></i>Payroll Processing</h3>
+                                    <p>Automated salary calculations, tax deductions, and comprehensive payroll reports.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // Navigation based on user role
+        const navLinks = {
+            employee: [
+                { name: "Dashboard", page: "dashboard", icon: "fas fa-tachometer-alt" },
+                { name: "Profile", page: "profile", icon: "fas fa-user" },
+                { name: "Attendance", page: "attendance", icon: "fas fa-calendar-check" },
+                { name: "Leave", page: "leave", icon: "fas fa-umbrella-beach" },
+                { name: "Payroll", page: "payroll", icon: "fas fa-file-invoice-dollar" }
+            ],
+            admin: [
+                { name: "Dashboard", page: "dashboard", icon: "fas fa-tachometer-alt" },
+                { name: "Employees", page: "profile", icon: "fas fa-users" },
+                { name: "Attendance", page: "attendance", icon: "fas fa-clipboard-list" },
+                { name: "Leave", page: "leave", icon: "fas fa-check-circle" },
+                { name: "Payroll", page: "payroll", icon: "fas fa-chart-line" },
+                { name: "About", page: "about", icon: "fas fa-info-circle" }
+            ]
+        };
+
+        // Available pages for navigation
+        const availablePages = {
+            employee: ["dashboard", "profile", "attendance", "leave", "payroll"],
+            admin: ["dashboard", "profile", "attendance", "leave", "payroll", "about"]
+        };
+
+        // Initialize the application
+        function initApp() {
+            renderPage();
+            setupEventListeners();
+        }
+
+        // Navigate to a page
+        function goToPage(page) {
+            state.navigationHistory.push(state.currentPage);
+            state.currentPage = page;
+            renderPage();
+        }
+
+        // Go back to previous page
+        function goToPrevious() {
+            if (state.navigationHistory.length > 0) {
+                state.currentPage = state.navigationHistory.pop();
+                renderPage();
+            } else {
+                goToPage('dashboard');
+            }
+        }
+
+        // Go to next page in sequence
+        function goToNext() {
+            const currentPages = availablePages[state.currentUser.role] || availablePages.employee;
+            const currentIndex = currentPages.indexOf(state.currentPage);
+            
+            if (currentIndex < currentPages.length - 1) {
+                goToPage(currentPages[currentIndex + 1]);
+            } else {
+                goToPage(currentPages[0]); // Loop back to first page
+            }
+        }
+
+        // Go to dashboard
+        function goToDashboard() {
+            goToPage('dashboard');
+        }
+
+        // Go to about page
+        function goToAbout() {
+            goToPage('about');
+        }
+
+        // Open modal
+        function openModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('adminModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('adminModal').classList.remove('active');
+        }
+
+        // Render the current page
+        function renderPage() {
+            const mainContent = document.getElementById('mainContent');
+            const header = document.getElementById('header');
+            const navLinksContainer = document.getElementById('navLinks');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            
+            // Update user info in header
+            userAvatar.textContent = state.currentUser.name.split(' ').map(n => n[0]).join('');
+            userName.textContent = state.currentUser.name;
+            userRole.textContent = state.currentUser.role === 'admin' ? 'Admin/HR Officer' : 'Employee';
+            
+            // Show/hide header based on authentication
+            if (state.isAuthenticated) {
+                header.classList.remove('hidden');
+                
+                // Render navigation links based on user role
+                navLinksContainer.innerHTML = navLinks[state.currentUser.role]
+                    .map(link => `
+                        <li>
+                            <a href="#" data-page="${link.page}" class="${state.currentPage === link.page ? 'active' : ''}">
+                                <i class="${link.icon} mr-2"></i>${link.name}
+                            </a>
+                        </li>
+                    `).join('');
+                
+                // Render the appropriate dashboard or page
+                if (state.currentPage === 'dashboard') {
+                    mainContent.innerHTML = state.currentUser.role === 'admin' ? pages.adminDashboard : pages.employeeDashboard;
+                } else {
+                    mainContent.innerHTML = pages[state.currentPage] || pages.dashboard;
+                }
+            } else {
+                header.classList.add('hidden');
+                mainContent.innerHTML = pages[state.currentPage] || pages.login;
+            }
+            
+            // Initialize tab functionality if on profile page
+            if (state.currentPage === 'profile' && state.currentUser.role !== 'admin') {
+                initTabs();
+            }
+            
+            // Set default dates for leave form
+            if (state.currentPage === 'leave') {
+                const today = new Date().toISOString().split('T')[0];
+                const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                const startDateInput = document.getElementById('startDate');
+                const endDateInput = document.getElementById('endDate');
+                if (startDateInput) startDateInput.value = nextWeek;
+                if (endDateInput) endDateInput.value = nextWeek;
+            }
+        }
+
+        // Initialize tab switching on profile page
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show active tab content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === `${tabId}Tab`) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Login form submission
+            document.addEventListener('submit', function(e) {
+                if (e.target.matches('#loginForm')) {
+                    e.preventDefault();
+                    const email = document.getElementById('loginEmail').value.trim();
+                    const password = document.getElementById('loginPassword').value;
+                    const role = document.getElementById('loginRole').value;
+                    
+                    // Simple validation
+                    if (!email) {
+                        showError('loginEmailError', 'Email is required');
+                        return;
+                    }
+                    
+                    if (!password) {
+                        showError('loginPasswordError', 'Password is required');
+                        return;
+                    }
+                    
+                    if (!role) {
+                        showError('loginRole', 'Please select a role');
+                        return;
+                    }
+                    
+                    // Find user in registered employees
+                    const user = registeredEmployees.find(emp => 
+                        emp.email === email && emp.password === password
+                    );
+                    
+                    if (user && user.role === role) {
+                        // Clear errors
+                        clearErrors();
+                        
+                        // Set current user
+                        state.currentUser = {...user};
+                        state.isAuthenticated = true;
+                        state.currentPage = 'dashboard';
+                        state.navigationHistory = [];
+                        renderPage();
+                        showNotification(`Login successful! Welcome ${user.name}.`, 'success');
+                    } else {
+                        showError('loginPasswordError', 'Invalid email or password for selected role');
+                    }
+                }
+            });
+            
+            // Signup form submission
+            document.addEventListener('submit', function(e) {
+                if (e.target.matches('#signupForm')) {
+                    e.preventDefault();
+                    const employeeId = document.getElementById('signupEmployeeId').value.trim();
+                    const fullName = document.getElementById('signupFullName').value.trim();
+                    const email = document.getElementById('signupEmail').value.trim();
+                    const password = document.getElementById('signupPassword').value;
+                    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                    const role = document.getElementById('signupRole').value;
+                    
+                    // Validation
+                    let isValid = true;
+                    
+                    if (!employeeId) {
+                        showError('signupEmployeeId', 'Employee ID is required');
+                        isValid = false;
+                    }
+                    
+                    if (!fullName) {
+                        showError('signupFullName', 'Full name is required');
+                        isValid = false;
+                    }
+                    
+                    if (!email) {
+                        showError('signupEmail', 'Email is required');
+                        isValid = false;
+                    }
+                    
+                    if (!password) {
+                        showError('signupPassword', 'Password is required');
+                        isValid = false;
+                    } else if (!validatePassword(password)) {
+                        showError('signupPassword', 'Password does not meet requirements');
+                        isValid = false;
+                    }
+                    
+                    if (password !== confirmPassword) {
+                        showError('signupConfirmPassword', 'Passwords do not match');
+                        isValid = false;
+                    }
+                    
+                    if (!role) {
+                        showError('signupRole', 'Please select a role');
+                        isValid = false;
+                    }
+                    
+                    if (isValid) {
+                        // In a real app, you would send this data to a server
+                        showNotification('Account created successfully! Please check your email for verification.', 'success');
+                        setTimeout(() => {
+                            state.currentPage = 'login';
+                            renderPage();
+                        }, 2000);
+                    }
+                }
+            });
+            
+            // Leave form submission (employee only)
+            document.addEventListener('submit', function(e) {
+                if (e.target.matches('#leaveForm')) {
+                    e.preventDefault();
+                    const leaveType = document.getElementById('leaveType').value;
+                    const leaveDays = document.getElementById('leaveDays').value;
+                    const startDate = document.getElementById('startDate').value;
+                    const endDate = document.getElementById('endDate').value;
+                    const remarks = document.getElementById('leaveRemarks').value;
+                    
+                    if (leaveType && leaveDays && startDate && endDate && remarks) {
+                        // Add new leave request
+                        const newRequest = {
+                            id: sampleLeaveRequests.length + 1,
+                            employeeId: state.currentUser.id,
+                            employee: state.currentUser.name,
+                            type: leaveType,
+                            startDate: startDate,
+                            endDate: endDate,
+                            days: parseFloat(leaveDays),
+                            status: "pending",
+                            remarks: remarks,
+                            appliedDate: new Date().toISOString().split('T')[0]
+                        };
+                        
+                        sampleLeaveRequests.unshift(newRequest);
+                        
+                        showNotification('Leave application submitted successfully! It is now pending approval.', 'success');
+                        e.target.reset();
+                        
+                        // Set default dates
+                        const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                        document.getElementById('startDate').value = nextWeek;
+                        document.getElementById('endDate').value = nextWeek;
+                        
+                        // Refresh page if on leave page
+                        if (state.currentPage === 'leave') {
+                            renderPage();
+                        }
+                    } else {
+                        showNotification('Please fill in all required fields.', 'warning');
+                    }
+                }
+            });
+            
+            // Navigation between auth pages
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'goToSignup' || e.target.closest('#goToSignup')) {
+                    e.preventDefault();
+                    state.currentPage = 'signup';
+                    renderPage();
+                }
+                
+                if (e.target.id === 'goToLogin' || e.target.closest('#goToLogin')) {
+                    e.preventDefault();
+                    state.currentPage = 'login';
+                    renderPage();
+                }
+            });
+            
+            // Navigation links
+            document.addEventListener('click', function(e) {
+                const navLink = e.target.closest('[data-page]');
+                if (navLink) {
+                    e.preventDefault();
+                    goToPage(navLink.getAttribute('data-page'));
+                }
+                
+                // Dashboard card clicks
+                if (e.target.closest('#profileCard')) {
+                    goToPage('profile');
+                }
+                if (e.target.closest('#attendanceCard') || e.target.closest('#adminAttendanceCard')) {
+                    goToPage('attendance');
+                }
+                if (e.target.closest('#leaveCard') || e.target.closest('#leaveApprovalCard')) {
+                    goToPage('leave');
+                }
+                if (e.target.closest('#payrollCard') || e.target.closest('#adminPayrollCard')) {
+                    goToPage('payroll');
+                }
+                if (e.target.closest('#employeesCard')) {
+                    goToPage('profile');
+                }
+            });
+            
+            // Logout button
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    state.isAuthenticated = false;
+                    state.currentPage = 'login';
+                    state.navigationHistory = [];
+                    renderPage();
+                    showNotification('You have been logged out successfully.', 'info');
+                });
+            }
+            
+            // Check-in/Check-out functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'checkinBtn' || e.target.closest('#checkinBtn')) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    document.getElementById('checkinTime').textContent = timeString;
+                    e.target.disabled = true;
+                    e.target.innerHTML = '<i class="fas fa-check-circle"></i> Checked In';
+                    e.target.classList.remove('btn-success');
+                    e.target.classList.add('btn-light');
+                    
+                    const checkoutBtn = document.getElementById('checkoutBtn');
+                    checkoutBtn.disabled = false;
+                    
+                    showNotification(`Checked in successfully at ${timeString}`, 'success');
+                }
+                
+                if (e.target.id === 'checkoutBtn' || e.target.closest('#checkoutBtn')) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    document.getElementById('checkoutTime').textContent = timeString;
+                    e.target.disabled = true;
+                    e.target.innerHTML = '<i class="fas fa-check-circle"></i> Checked Out';
+                    e.target.classList.remove('btn-warning');
+                    e.target.classList.add('btn-light');
+                    
+                    showNotification(`Checked out successfully at ${timeString}`, 'success');
+                }
+            });
+            
+            // Edit profile button
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'editProfileBtn' || e.target.closest('#editProfileBtn')) {
+                    showNotification('Edit profile functionality would open in a real application.', 'info');
+                }
+            });
+        }
+
+        // Utility functions
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = message;
+                element.style.display = 'block';
+            }
+        }
+        
+        function clearErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+        }
+        
+        function validatePassword(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+            
+            return password.length >= minLength && 
+                   hasUpperCase && 
+                   hasLowerCase && 
+                   hasNumbers && 
+                   hasSpecialChar;
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div style="position: fixed; top: 20px; right: 20px; background: ${type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : type === 'danger' ? 'var(--danger)' : 'var(--primary)'}; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; max-width: 400px; animation: slideIn 0.3s ease;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : type === 'danger' ? 'times-circle' : 'info-circle'}"></i>
+                        <div>${message}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            // Add CSS animations
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Functions for admin operations
+        window.approveLeave = function(id) {
+            const request = sampleLeaveRequests.find(r => r.id === id);
+            if (request) {
+                request.status = 'approved';
+                showNotification(`Leave request #${id} approved for ${request.employee}!`, 'success');
+                renderPage();
+            }
+        };
+        
+        window.rejectLeave = function(id) {
+            const request = sampleLeaveRequests.find(r => r.id === id);
+            if (request) {
+                request.status = 'rejected';
+                showNotification(`Leave request #${id} rejected for ${request.employee}.`, 'warning');
+                renderPage();
+            }
+        };
+        
+        window.callForMeeting = function(employeeId, employeeName) {
+            const content = `
+                <div class="form-group">
+                    <label for="meetingReason">Meeting Reason *</label>
+                    <input type="text" class="form-control" id="meetingReason" placeholder="Enter meeting reason" required>
+                </div>
+                <div class="form-group">
+                    <label for="meetingDate">Meeting Date *</label>
+                    <input type="date" class="form-control" id="meetingDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="meetingTime">Meeting Time *</label>
+                    <input type="time" class="form-control" id="meetingTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="meetingNotes">Additional Notes</label>
+                    <textarea class="form-control" id="meetingNotes" placeholder="Enter any additional notes" rows="3"></textarea>
+                </div>
+                <button class="btn btn-block mt-4" onclick="scheduleMeeting(${employeeId}, '${employeeName}')">
+                    <i class="fas fa-calendar-check"></i> Schedule Meeting
+                </button>
+            `;
+            openModal(`Schedule Meeting with ${employeeName}`, content);
+        };
+        
+        window.scheduleMeeting = function(employeeId, employeeName) {
+            const reason = document.getElementById('meetingReason').value;
+            const date = document.getElementById('meetingDate').value;
+            const time = document.getElementById('meetingTime').value;
+            
+            if (reason && date && time) {
+                showNotification(`Meeting scheduled with ${employeeName} for ${date} at ${time}. Reason: ${reason}`, 'success');
+                closeModal();
+            } else {
+                showNotification('Please fill in all required fields.', 'warning');
+            }
+        };
+        
+        window.createAnnouncement = function() {
+            const content = `
+                <div class="form-group">
+                    <label for="announcementTitle">Announcement Title *</label>
+                    <input type="text" class="form-control" id="announcementTitle" placeholder="Enter announcement title" required>
+                </div>
+                <div class="form-group">
+                    <label for="announcementMessage">Message *</label>
+                    <textarea class="form-control" id="announcementMessage" placeholder="Enter announcement message" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="announcementPriority">Priority</label>
+                    <select class="form-control" id="announcementPriority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <button class="btn btn-block mt-4" onclick="postAnnouncement()">
+                    <i class="fas fa-bullhorn"></i> Post Announcement
+                </button>
+            `;
+            openModal('Create Company Announcement', content);
+        };
+        
+        window.postAnnouncement = function() {
+            const title = document.getElementById('announcementTitle').value;
+            const message = document.getElementById('announcementMessage').value;
+            const priority = document.getElementById('announcementPriority').value;
+            
+            if (title && message) {
+                const newAnnouncement = {
+                    id: adminAnnouncements.length + 1,
+                    title: title,
+                    message: message,
+                    date: new Date().toISOString().split('T')[0],
+                    priority: priority
+                };
+                
+                adminAnnouncements.unshift(newAnnouncement);
+                showNotification('Announcement posted successfully!', 'success');
+                closeModal();
+                
+                // Refresh dashboard if on dashboard
+                if (state.currentPage === 'dashboard') {
+                    renderPage();
+                }
+            } else {
+                showNotification('Please fill in all required fields.', 'warning');
+            }
+        };
+        
+        window.viewEmployee = function(id) {
+            const employee = registeredEmployees.find(emp => emp.id === id);
+            if (employee) {
+                const content = `
+                    <div class="detail-row">
+                        <div class="detail-label">Name</div>
+                        <div class="detail-value">${employee.name}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value">${employee.email}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Department</div>
+                        <div class="detail-value">${employee.department}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Position</div>
+                        <div class="detail-value">${employee.position}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Contact</div>
+                        <div class="detail-value">${employee.contact}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Salary</div>
+                        <div class="detail-value">₹${employee.salary.toLocaleString('en-IN')}/year</div>
+                    </div>
+                    <button class="btn btn-block mt-4" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                `;
+                openModal(`View Employee: ${employee.name}`, content);
+            }
+        };
+        
+        window.editEmployee = function(id) {
+            const employee = registeredEmployees.find(emp => emp.id === id);
+            if (employee) {
+                const content = `
+                    <div class="form-group">
+                        <label for="editName">Full Name *</label>
+                        <input type="text" class="form-control" id="editName" value="${employee.name}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email *</label>
+                        <input type="email" class="form-control" id="editEmail" value="${employee.email}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDepartment">Department *</label>
+                        <select class="form-control" id="editDepartment" required>
+                            <option value="Engineering" ${employee.department === 'Engineering' ? 'selected' : ''}>Engineering</option>
+                            <option value="Marketing" ${employee.department === 'Marketing' ? 'selected' : ''}>Marketing</option>
+                            <option value="Sales" ${employee.department === 'Sales' ? 'selected' : ''}>Sales</option>
+                            <option value="HR" ${employee.department === 'HR' ? 'selected' : ''}>HR</option>
+                            <option value="Finance" ${employee.department === 'Finance' ? 'selected' : ''}>Finance</option>
+                            <option value="Operations" ${employee.department === 'Operations' ? 'selected' : ''}>Operations</option>
+                            <option value="Quality Assurance" ${employee.department === 'Quality Assurance' ? 'selected' : ''}>Quality Assurance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPosition">Position *</label>
+                        <input type="text" class="form-control" id="editPosition" value="${employee.position}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSalary">Annual Salary *</label>
+                        <input type="number" class="form-control" id="editSalary" value="${employee.salary}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editContact">Contact *</label>
+                        <input type="tel" class="form-control" id="editContact" value="${employee.contact}" required>
+                    </div>
+                    <button class="btn btn-success btn-block mt-4" onclick="saveEmployee(${id})">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button class="btn btn-light btn-block mt-2" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                `;
+                openModal(`Edit Employee: ${employee.name}`, content);
+            }
+        };
+        
+        window.saveEmployee = function(id) {
+            const employee = registeredEmployees.find(emp => emp.id === id);
+            if (employee) {
+                employee.name = document.getElementById('editName').value;
+                employee.email = document.getElementById('editEmail').value;
+                employee.department = document.getElementById('editDepartment').value;
+                employee.position = document.getElementById('editPosition').value;
+                employee.salary = parseFloat(document.getElementById('editSalary').value);
+                employee.contact = document.getElementById('editContact').value;
+                
+                showNotification(`Employee ${employee.name} updated successfully!`, 'success');
+                closeModal();
+                
+                // Refresh current page if showing employees
+                if (state.currentPage === 'profile' && state.currentUser.role === 'admin') {
+                    renderPage();
+                }
+            }
+        };
+        
+        window.addNewEmployee = function() {
+            const content = `
+                <div class="form-group">
+                    <label for="newEmployeeId">Employee ID *</label>
+                    <input type="text" class="form-control" id="newEmployeeId" placeholder="Enter employee ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeeName">Full Name *</label>
+                    <input type="text" class="form-control" id="newEmployeeName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeeEmail">Email *</label>
+                    <input type="email" class="form-control" id="newEmployeeEmail" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeePassword">Password *</label>
+                    <input type="password" class="form-control" id="newEmployeePassword" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeeDepartment">Department *</label>
+                    <select class="form-control" id="newEmployeeDepartment" required>
+                        <option value="">Select Department</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                        <option value="HR">HR</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Quality Assurance">Quality Assurance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeePosition">Position *</label>
+                    <input type="text" class="form-control" id="newEmployeePosition" placeholder="Enter position" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeeSalary">Annual Salary *</label>
+                    <input type="number" class="form-control" id="newEmployeeSalary" placeholder="Enter annual salary" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeeContact">Contact *</label>
+                    <input type="tel" class="form-control" id="newEmployeeContact" placeholder="Enter contact number" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmployeeRole">Role *</label>
+                    <select class="form-control" id="newEmployeeRole" required>
+                        <option value="employee">Employee</option>
+                        <option value="admin">Admin/HR</option>
+                    </select>
+                </div>
+                <button class="btn btn-success btn-block mt-4" onclick="saveNewEmployee()">
+                    <i class="fas fa-user-plus"></i> Add Employee
+                </button>
+                <button class="btn btn-light btn-block mt-2" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+            openModal('Add New Employee', content);
+        };
+        
+        window.saveNewEmployee = function() {
+            const newEmployee = {
+                id: registeredEmployees.length + 1,
+                employeeId: document.getElementById('newEmployeeId').value,
+                name: document.getElementById('newEmployeeName').value,
+                email: document.getElementById('newEmployeeEmail').value,
+                password: document.getElementById('newEmployeePassword').value,
+                department: document.getElementById('newEmployeeDepartment').value,
+                position: document.getElementById('newEmployeePosition').value,
+                salary: parseFloat(document.getElementById('newEmployeeSalary').value),
+                contact: document.getElementById('newEmployeeContact').value,
+                role: document.getElementById('newEmployeeRole').value,
+                joinDate: new Date().toISOString().split('T')[0],
+                status: "Active",
+                location: "Bengaluru",
+                performance: 85,
+                attendance: 90,
+                leavesRemaining: { paid: 12, sick: 8, casual: 10 }
+            };
+            
+            registeredEmployees.push(newEmployee);
+            showNotification(`Employee ${newEmployee.name} added successfully!`, 'success');
+            closeModal();
+            
+            // Refresh current page if showing employees
+            if (state.currentPage === 'profile' && state.currentUser.role === 'admin') {
+                renderPage();
+            }
+        };
+        
+        window.editSalary = function(id) {
+            const employee = registeredEmployees.find(emp => emp.id === id);
+            if (employee) {
+                const content = `
+                    <div class="form-group">
+                        <label for="editEmployeeSalary">Annual Salary *</label>
+                        <input type="number" class="form-control" id="editEmployeeSalary" value="${employee.salary}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSalaryReason">Reason for Change</label>
+                        <textarea class="form-control" id="editSalaryReason" placeholder="Enter reason for salary change" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-success btn-block mt-4" onclick="saveSalary(${id})">
+                        <i class="fas fa-save"></i> Update Salary
+                    </button>
+                    <button class="btn btn-light btn-block mt-2" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                `;
+                openModal(`Edit Salary for ${employee.name}`, content);
+            }
+        };
+        
+        window.saveSalary = function(id) {
+            const employee = registeredEmployees.find(emp => emp.id === id);
+            if (employee) {
+                employee.salary = parseFloat(document.getElementById('editEmployeeSalary').value);
+                showNotification(`Salary updated for ${employee.name} to ₹${employee.salary.toLocaleString('en-IN')}/year`, 'success');
+                closeModal();
+                
+                // Refresh current page if showing payroll
+                if (state.currentPage === 'payroll' || state.currentPage === 'dashboard') {
+                    renderPage();
+                }
+            }
+        };
+        
+        window.showLeaveBalance = function() {
+            const leaves = state.currentUser.leavesRemaining || { paid: 0, sick: 0, casual: 0 };
+            const content = `
+                <div class="detail-row">
+                    <div class="detail-label">Paid Leaves</div>
+                    <div class="detail-value">${leaves.paid} days remaining</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Sick Leaves</div>
+                    <div class="detail-value">${leaves.sick} days remaining</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Casual Leaves</div>
+                    <div class="detail-value">${leaves.casual} days remaining</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Total Leaves</div>
+                    <div class="detail-value">${leaves.paid + leaves.sick + leaves.casual} days remaining</div>
+                </div>
+                <button class="btn btn-light btn-block mt-4" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            `;
+            openModal('Your Leave Balance', content);
+        };
+        
+        window.filterLeaveRequests = function(status) {
+            showNotification(`Filtering leave requests by status: ${status}`, 'info');
+        };
+        
+        window.processPayroll = function() {
+            showNotification('Payroll processing started. This would run calculations in a real application.', 'success');
+        };
+
+        // Initialize the application when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
