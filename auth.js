@@ -1,29 +1,40 @@
-async function login() {
-  const role = document.getElementById("role").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+const express = require("express");
+const router = express.Router();
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-  if (!role || !email || !password) {
-    document.getElementById("msg").innerText = "All fields required";
-    return;
-  }
+// HR SIGNUP
+router.post("/hr-signup", async (req, res) => {
+  const { name, email, password } = req.body;
+  const hashed = await bcrypt.hash(password, 10);
 
-  const data = await apiRequest("/auth/login", "POST", {
+  await User.create({
+    name,
     email,
-    password
+    password: hashed,
+    role: "HR",
   });
 
-  if (!data.token) {
-    document.getElementById("msg").innerText = "Invalid credentials";
-    return;
-  }
+  res.json({ msg: "HR Registered" });
+});
 
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("role", role);
+// LOGIN
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-  if (role === "HR") {
-    window.location.href = "hr.html";
-  } else {
-    window.location.href = "employee.html";
-  }
-}
+  const user = await User.findOne({ email });
+  if (!user) return res.status(400).json({ msg: "User not found" });
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
+
+  const token = jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.JWT_SECRET
+  );
+
+  res.json({ token, role: user.role });
+});
+
+module.exports = router;
